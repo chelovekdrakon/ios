@@ -9,7 +9,7 @@
     
     NSInteger faceLength = [array count];
     
-    for (NSUInteger i = 0; i < faceLength; i++) {
+    for (int i = 0; i < faceLength; i++) {
         NSString *string = [array objectAtIndex:i];
         NSArray *subArray = [string componentsSeparatedByString: @" "];
         
