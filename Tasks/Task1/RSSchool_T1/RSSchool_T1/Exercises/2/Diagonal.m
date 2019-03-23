@@ -19,7 +19,7 @@
         secondarySumm += [[subArray objectAtIndex:secondaryIndex] doubleValue];
     }
     
-    return @(primarySumm - secondarySumm);
+    return @(fabs(primarySumm - secondarySumm));
 }
 
 @end
