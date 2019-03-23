@@ -11,15 +11,13 @@
     
     for (int i = 0; i < faceLength; i++) {
         NSString *string = [array objectAtIndex:i];
-        NSArray *subArray = [string componentsSeparatedByString: @" "];
+        NSArray<NSString *> *subArray = [string componentsSeparatedByString: @" "];
         
         primarySumm += [[subArray objectAtIndex:i] doubleValue];
         
         NSUInteger secondaryIndex = (faceLength - 1) - i;
         secondarySumm += [[subArray objectAtIndex:secondaryIndex] doubleValue];
     }
-    
-    NSLog(@"hello!");
     
     return @(primarySumm - secondarySumm);
 }

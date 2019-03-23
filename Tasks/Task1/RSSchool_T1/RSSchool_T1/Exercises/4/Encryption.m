@@ -7,7 +7,7 @@
     double stringLength = [string length];
     double columnsAmount = ceil(sqrt(stringLength));
     
-    NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+    NSMutableArray<NSString *> *resultArray = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < columnsAmount; i++) {
         NSMutableString *str = [[NSMutableString alloc] init];
