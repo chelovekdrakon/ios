@@ -9,7 +9,7 @@
 - (ResultObject*)sorted:(NSString*)string {
     ResultObject *value = [ResultObject new];
     
-    NSArray<NSString *> *array = [string componentsSeparatedByString:@" "];
+    NSArray<NSString *> *array = [string componentsSeparatedByString:@" "]; // will be autoreleased
     
     value.status = NO;
     NSMutableArray<NSNumber *> *positions = [NSMutableArray new];
@@ -26,7 +26,8 @@
         if ([positions count] == 2) {
             int secondNumber = [positions[1] intValue];
             
-            NSString *str = [NSString stringWithFormat: @"swap %@ %i", positions[0], secondNumber + 1];
+            NSString *str = [NSString stringWithFormat: @"swap %@ %i", positions[0], secondNumber + 1]; // will be autoreleased
+//            secondNumber = nil;
             
             value.detail = str;
         } else if ([array count] == 2) {
@@ -49,16 +50,21 @@
             if (isPositionsSorted) {
                 int secondNumber = [[positions lastObject] intValue];
                 
-                NSString *str = [NSString stringWithFormat: @"reverse %@ %i", positions[0], secondNumber + 1];
+                NSString *str = [NSString stringWithFormat: @"reverse %@ %i", positions[0], secondNumber + 1]; // will be autoreleased
+//                secondNumber = nil;
                 
                 value.detail = str;
             } else {
                 value.status = NO;
             }
+            
+//            isPositionsSorted = nil;
         }
     }
     
-    return value;
+    [positions release];
+    
+    return [value autorelease];
 }
 
 @end
