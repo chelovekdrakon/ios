@@ -20,15 +20,21 @@
                 NSString *letter = [NSString stringWithCharacters:&ch length:1];
                 
                 [str appendString:letter];
+                
+                [letter release];
             } else {
                 break;
             }
         }
         
         [resultArray addObject:str];
+        [str release]; // will it copy or share pointer?
     }
     
-    return [resultArray componentsJoinedByString:@" "];
+    NSString *result = [resultArray componentsJoinedByString:@" "];
+    [resultArray release];
+    
+    return result; // will be autoreleased
 }
 
 @end
