@@ -4,8 +4,10 @@
 
 // Complete the pangrams function below.
 - (BOOL)pangrams:(NSString *)string {
-    NSString *alphbetStr = @"q w e r t y u i o p a s d f g h j k l z x c v b n m"; // will be autoreleased
-    NSArray<NSString *> *alphbetArr = [alphbetStr componentsSeparatedByString:@" "]; // will be autoreleased
+    [string retain];
+    
+    NSString *alphbetStr = @"q w e r t y u i o p a s d f g h j k l z x c v b n m";
+    NSArray<NSString *> *alphbetArr = [alphbetStr componentsSeparatedByString:@" "];
     
     BOOL result = YES;
     
@@ -15,6 +17,8 @@
             break;
         }
     }
+    
+    [string release];
     
     return result;
 }

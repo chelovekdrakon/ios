@@ -7,9 +7,11 @@
 
 // Complete the sorted function below.
 - (ResultObject*)sorted:(NSString*)string {
+    [string retain];
+    
     ResultObject *value = [ResultObject new];
     
-    NSArray<NSString *> *array = [string componentsSeparatedByString:@" "]; // will be autoreleased
+    NSArray<NSString *> *array = [string componentsSeparatedByString:@" "];
     
     value.status = NO;
     NSMutableArray<NSNumber *> *positions = [NSMutableArray new];
@@ -26,8 +28,7 @@
         if ([positions count] == 2) {
             int secondNumber = [positions[1] intValue];
             
-            NSString *str = [NSString stringWithFormat: @"swap %@ %i", positions[0], secondNumber + 1]; // will be autoreleased
-//            secondNumber = nil;
+            NSString *str = [NSString stringWithFormat: @"swap %@ %i", positions[0], secondNumber + 1];
             
             value.detail = str;
         } else if ([array count] == 2) {
@@ -50,19 +51,17 @@
             if (isPositionsSorted) {
                 int secondNumber = [[positions lastObject] intValue];
                 
-                NSString *str = [NSString stringWithFormat: @"reverse %@ %i", positions[0], secondNumber + 1]; // will be autoreleased
-//                secondNumber = nil;
+                NSString *str = [NSString stringWithFormat: @"reverse %@ %i", positions[0], secondNumber + 1];
                 
                 value.detail = str;
             } else {
                 value.status = NO;
             }
-            
-//            isPositionsSorted = nil;
         }
     }
     
     [positions release];
+    [string release];
     
     return [value autorelease];
 }

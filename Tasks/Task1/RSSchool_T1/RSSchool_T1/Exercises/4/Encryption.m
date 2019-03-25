@@ -4,6 +4,8 @@
 
 // Complete the encryption function below.
 - (NSString *)encryption:(NSString *)string {
+    [string retain];
+    
     double stringLength = [string length];
     double columnsAmount = ceil(sqrt(stringLength));
     
@@ -20,21 +22,20 @@
                 NSString *letter = [NSString stringWithCharacters:&ch length:1];
                 
                 [str appendString:letter];
-                
-                [letter release];
             } else {
                 break;
             }
         }
         
         [resultArray addObject:str];
-        [str release]; // will it copy or share pointer?
+        [str release];
     }
     
     NSString *result = [resultArray componentsJoinedByString:@" "];
     [resultArray release];
+    [string release];
     
-    return result; // will be autoreleased
+    return result;
 }
 
 @end
