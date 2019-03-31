@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32098FFA2250AA98001AE6B2 /* TranslatorRoman+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32098FF92250AA98001AE6B2 /* TranslatorRoman+Parser.m */; };
+		320990002250C297001AE6B2 /* TranslatorArabic.m in Sources */ = {isa = PBXBuildFile; fileRef = 32098FFF2250C297001AE6B2 /* TranslatorArabic.m */; };
 		3221FBE2225025B200BE8F7A /* TranslatorRoman.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221FBE1225025B200BE8F7A /* TranslatorRoman.m */; };
 		32D0DE2622504384006E2A1B /* TranslatorRoman+ParseOverThousand.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0DE2522504384006E2A1B /* TranslatorRoman+ParseOverThousand.m */; };
 		E38F8D97224A3CDE009EF306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E38F8D96224A3CDE009EF306 /* AppDelegate.m */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		32098FF82250AA98001AE6B2 /* TranslatorRoman+Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TranslatorRoman+Parser.h"; sourceTree = "<group>"; };
 		32098FF92250AA98001AE6B2 /* TranslatorRoman+Parser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TranslatorRoman+Parser.m"; sourceTree = "<group>"; };
+		32098FFE2250C297001AE6B2 /* TranslatorArabic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslatorArabic.h; sourceTree = "<group>"; };
+		32098FFF2250C297001AE6B2 /* TranslatorArabic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslatorArabic.m; sourceTree = "<group>"; };
 		3221FBE0225025B200BE8F7A /* TranslatorRoman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslatorRoman.h; sourceTree = "<group>"; };
 		3221FBE1225025B200BE8F7A /* TranslatorRoman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslatorRoman.m; sourceTree = "<group>"; };
 		32D0DE2422504384006E2A1B /* TranslatorRoman+ParseOverThousand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TranslatorRoman+ParseOverThousand.h"; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 		3221FBDF2250258A00BE8F7A /* Translator_Arabic */ = {
 			isa = PBXGroup;
 			children = (
+				32098FFE2250C297001AE6B2 /* TranslatorArabic.h */,
+				32098FFF2250C297001AE6B2 /* TranslatorArabic.m */,
 			);
 			path = Translator_Arabic;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				32098FFA2250AA98001AE6B2 /* TranslatorRoman+Parser.m in Sources */,
 				E38F8DA5224A3CE0009EF306 /* main.m in Sources */,
 				E38F8DBB224A3EF0009EF306 /* KidnapperNote.m in Sources */,
+				320990002250C297001AE6B2 /* TranslatorArabic.m in Sources */,
 				E38F8D97224A3CDE009EF306 /* AppDelegate.m in Sources */,
 				E38F8DC9224A4825009EF306 /* RomanTranslator.m in Sources */,
 			);
