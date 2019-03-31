@@ -13,10 +13,10 @@
 - (NSMutableString *)parseOverThousand:(double)number {
     NSMutableString *result = [NSMutableString new];
     
-    double numberOfThousands = floor(number / 10000);
+    double numberOfThousands = floor(number / 1000);
     
     for (int i = 0; i < numberOfThousands; i++) {
-        [result appendString:[self.mapArabicToRoman valueForKey:@"10000"]];
+        [result appendString:[self.mapArabicToRoman valueForKey:@"1000"]];
     }
     
     return [result autorelease];

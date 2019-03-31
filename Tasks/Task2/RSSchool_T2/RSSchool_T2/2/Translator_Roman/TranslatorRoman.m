@@ -7,9 +7,7 @@
 //
 
 #import "TranslatorRoman.h"
-#import "TranslatorRoman+ParseTen.h"
-#import "TranslatorRoman+ParseHundred.h"
-#import "TranslatorRoman+ParseThousand.h"
+#import "TranslatorRoman+Parser.h"
 #import "TranslatorRoman+ParseOverThousand.h"
 
 
@@ -47,7 +45,7 @@
 }
 
 - (void)dealloc {
-    // IS IT SECURE TO USE AUTORELEASE VALUE AS PROPERTY
+    // IS IT SECURE TO USE [...autorelease] VALUE AS PROPERTY?
     [super dealloc];
 }
 
@@ -55,15 +53,15 @@
     [romanString retain];
     
     int decimalPart = [romanString intValue] % 10;
-    NSMutableString *simple = [self parseTen:decimalPart > 0 ? decimalPart : 10];
+    NSMutableString *simple = [self parseDigit:(decimalPart > 0 ? decimalPart : 10) withMultiplier:1];
     
     int hundredPart = [romanString intValue] % 100;
-    NSMutableString *decimal = [self parseHundred:hundredPart > 0 ? hundredPart : 100];
+    NSMutableString *decimal = [self parseDigit:(hundredPart > 0 ? hundredPart : 100) withMultiplier:10];
     
     int thousandPart = [romanString intValue] % 1000;
-    NSMutableString *hundrends = [self parseThousand:thousandPart > 0 ? thousandPart : 10000];
+    NSMutableString *hundrends = [self parseDigit:(thousandPart > 0 ? thousandPart : 10000) withMultiplier:100];
     
-    NSMutableString *thousands = [self parseThousand:[romanString doubleValue]];
+    NSMutableString *thousands = [self parseOverThousand:[romanString doubleValue]];
     
     NSString * result = [NSString stringWithFormat:@"%@%@%@%@", thousands, hundrends, decimal, simple];
     
