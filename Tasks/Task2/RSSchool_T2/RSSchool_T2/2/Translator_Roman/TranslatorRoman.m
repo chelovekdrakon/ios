@@ -9,6 +9,8 @@
 #import "TranslatorRoman.h"
 #import "TranslatorRoman+ParseTen.h"
 #import "TranslatorRoman+ParseHundred.h"
+#import "TranslatorRoman+ParseThousand.h"
+
 
 @implementation TranslatorRoman
 
@@ -52,13 +54,15 @@
     [romanString retain];
     
     int decimalPart = [romanString intValue] % 10;
-    NSMutableString *decimal = [self parseTen:decimalPart > 0 ? decimalPart : 10];
+    NSMutableString *simple = [self parseTen:decimalPart > 0 ? decimalPart : 10];
     
     int hundredPart = [romanString intValue] % 100;
-    NSMutableString *hundrends = [self parseHundred:hundredPart > 0 ? hundredPart : 100];
-//    NSMutableString *thousands = [self parseTen:[romanString doubleValue]];
+    NSMutableString *decimal = [self parseHundred:hundredPart > 0 ? hundredPart : 100];
     
-    NSString * result = [NSString stringWithFormat:@"%@%@", hundrends, decimal];
+    int thousandPart = [romanString intValue] % 1000;
+    NSMutableString *hundrends = [self parseThousand:thousandPart > 0 ? thousandPart : 10000];
+    
+    NSString * result = [NSString stringWithFormat:@"%@%@%@", hundrends, decimal, simple];
     
     [romanString release];
     

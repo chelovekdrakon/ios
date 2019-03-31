@@ -15,7 +15,7 @@
     
     double numberOfDecimal = floor(number / 10);
     
-    if (number < 40) {
+    if (numberOfDecimal < 4) {
         NSMutableString *str = [NSMutableString new];
         
         for (int i = 0; i < numberOfDecimal; i++) {
@@ -25,9 +25,9 @@
         [result appendString:str];
         
         [str release];
-    } else if (number == 40) {
+    } else if (numberOfDecimal == 4) {
         [result appendString:[self.mapArabicToRoman valueForKey:@"40"]];
-    } else if (number > 40 && number < 90) {
+    } else if (numberOfDecimal > 4 && numberOfDecimal < 9) {
         NSMutableString *str = [NSMutableString new];
         [str appendString:[self.mapArabicToRoman valueForKey:@"50"]];
         
@@ -37,7 +37,7 @@
         
         [result appendString:str];
         [str release];
-    } else if (number == 90) {
+    } else if (numberOfDecimal == 9) {
         [result appendString:[self.mapArabicToRoman valueForKey:@"90"]];
     } else {
         [result appendString:[self.mapArabicToRoman valueForKey:@"100"]];
