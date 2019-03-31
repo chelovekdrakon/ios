@@ -6,24 +6,23 @@
 //  Copyright © 2019 Alexander Shalamov. All rights reserved.
 //
 
-#import "TranslatorRoman+parseHundred.h"
+#import "TranslatorRoman+ParseHundred.h"
 
-@implementation TranslatorRoman (parseHundred)
+@implementation TranslatorRoman (ParseHundred)
 
 - (NSMutableString *)parseHundred:(double)number {
     NSMutableString *result = [NSMutableString new];
     
+    double numberOfDecimal = floor(number / 10);
+    
     if (number < 40) {
         NSMutableString *str = [NSMutableString new];
-        
-        double numberOfDecimal = floor(number / 10);
         
         for (int i = 0; i < numberOfDecimal; i++) {
             [str appendString:[self.mapArabicToRoman valueForKey:@"10"]];
         }
         
         [result appendString:str];
-        [result appendString:[self parseTen:(number - numberOfDecimal)]];
         
         [str release];
     } else if (number == 40) {
@@ -32,7 +31,7 @@
         NSMutableString *str = [NSMutableString new];
         [str appendString:[self.mapArabicToRoman valueForKey:@"50"]];
         
-        for (int i = 0; i < (number - 5); i++) {
+        for (int i = 0; i < (numberOfDecimal - 5); i++) {
             [str appendString:[self.mapArabicToRoman valueForKey:@"10"]];
         }
         

@@ -1,5 +1,5 @@
 //
-//  TranslatorRoman+parseHundred.h
+//  TranslatorRoman+ParseHundred.h
 //  RSSchool_T2
 //
 //  Created by Фёдор on 3/31/19.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TranslatorRoman (parseHundred)
+@interface TranslatorRoman (ParseHundred)
 - (NSMutableString *)parseHundred:(double)number;
 @end
 

@@ -6,9 +6,9 @@
 //  Copyright © 2019 Alexander Shalamov. All rights reserved.
 //
 
-#import "TranslatorRoman+parseTen.h"
+#import "TranslatorRoman+ParseTen.h"
 
-@implementation TranslatorRoman (parseTen)
+@implementation TranslatorRoman (ParseTen)
 
 - (NSMutableString *)parseTen:(double)number {
     NSMutableString *result = [NSMutableString new];

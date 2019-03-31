@@ -7,7 +7,8 @@
 //
 
 #import "TranslatorRoman.h"
-#import "TranslatorRoman+parseTen.h"
+#import "TranslatorRoman+ParseTen.h"
+#import "TranslatorRoman+ParseHundred.h"
 
 @implementation TranslatorRoman
 
@@ -50,12 +51,18 @@
 - (NSString *)translateToArabic:(NSString *)romanString {
     [romanString retain];
     
-    NSMutableString *mutableResult = [self parseTen:[romanString doubleValue]];
-    NSString * result = [NSString stringWithString:mutableResult];
+    int decimalPart = [romanString intValue] % 10;
+    NSMutableString *decimal = [self parseTen:decimalPart > 0 ? decimalPart : 10];
+    
+    int hundredPart = [romanString intValue] % 100;
+    NSMutableString *hundrends = [self parseHundred:hundredPart > 0 ? hundredPart : 100];
+//    NSMutableString *thousands = [self parseTen:[romanString doubleValue]];
+    
+    NSString * result = [NSString stringWithFormat:@"%@%@", hundrends, decimal];
     
     [romanString release];
     
-    return result;
+    return [result autorelease];
 }
 
 @end
