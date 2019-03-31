@@ -54,20 +54,32 @@
     
     int decimalPart = [romanString intValue] % 10;
     NSMutableString *simple = [self parseDigit:(decimalPart > 0 ? decimalPart : 10) withMultiplier:1];
+    [simple retain];
+    
     
     int hundredPart = [romanString intValue] % 100;
     NSMutableString *decimal = [self parseDigit:(hundredPart > 0 ? hundredPart : 100) withMultiplier:10];
+    [decimal retain];
     
     int thousandPart = [romanString intValue] % 1000;
     NSMutableString *hundrends = [self parseDigit:(thousandPart > 0 ? thousandPart : 10000) withMultiplier:100];
+    [hundrends retain];
     
     NSMutableString *thousands = [self parseOverThousand:[romanString doubleValue]];
+    [thousands retain];
     
-    NSString * result = [NSString stringWithFormat:@"%@%@%@%@", thousands, hundrends, decimal, simple];
+    NSString * result = [NSString stringWithFormat:@"%@%@%@%@",
+                         thousands, hundrends, decimal, simple];
+    
+    [simple release];
+    [decimal release];
+    [hundrends release];
+    [thousands release];
+    
     
     [romanString release];
     
-    return [result autorelease];
+    return result; // will be autoreleased
 }
 
 @end
