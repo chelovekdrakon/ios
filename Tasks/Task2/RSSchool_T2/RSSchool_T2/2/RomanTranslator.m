@@ -31,7 +31,6 @@
     [romanString release];
 
     return [result autorelease];
-    return @"";
 }
 
 // your code here

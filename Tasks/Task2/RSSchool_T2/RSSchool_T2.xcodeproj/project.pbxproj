@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32098FFA2250AA98001AE6B2 /* TranslatorRoman+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32098FF92250AA98001AE6B2 /* TranslatorRoman+Parser.m */; };
 		320990002250C297001AE6B2 /* TranslatorArabic.m in Sources */ = {isa = PBXBuildFile; fileRef = 32098FFF2250C297001AE6B2 /* TranslatorArabic.m */; };
+		3209900322510F44001AE6B2 /* AssimilationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3209900222510F44001AE6B2 /* AssimilationInfo.m */; };
 		3221FBE2225025B200BE8F7A /* TranslatorRoman.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221FBE1225025B200BE8F7A /* TranslatorRoman.m */; };
 		32D0DE2622504384006E2A1B /* TranslatorRoman+ParseOverThousand.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0DE2522504384006E2A1B /* TranslatorRoman+ParseOverThousand.m */; };
 		E38F8D97224A3CDE009EF306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E38F8D96224A3CDE009EF306 /* AppDelegate.m */; };
@@ -47,6 +48,8 @@
 		32098FF92250AA98001AE6B2 /* TranslatorRoman+Parser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TranslatorRoman+Parser.m"; sourceTree = "<group>"; };
 		32098FFE2250C297001AE6B2 /* TranslatorArabic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslatorArabic.h; sourceTree = "<group>"; };
 		32098FFF2250C297001AE6B2 /* TranslatorArabic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslatorArabic.m; sourceTree = "<group>"; };
+		3209900122510F44001AE6B2 /* AssimilationInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssimilationInfo.h; sourceTree = "<group>"; };
+		3209900222510F44001AE6B2 /* AssimilationInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssimilationInfo.m; sourceTree = "<group>"; };
 		3221FBE0225025B200BE8F7A /* TranslatorRoman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslatorRoman.h; sourceTree = "<group>"; };
 		3221FBE1225025B200BE8F7A /* TranslatorRoman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslatorRoman.m; sourceTree = "<group>"; };
 		32D0DE2422504384006E2A1B /* TranslatorRoman+ParseOverThousand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TranslatorRoman+ParseOverThousand.h"; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 			children = (
 				E38F8DD0224A8AEA009EF306 /* DoomsdayMachine.h */,
 				E38F8DD1224A8AEA009EF306 /* DoomsdayMachine.m */,
+				3209900122510F44001AE6B2 /* AssimilationInfo.h */,
+				3209900222510F44001AE6B2 /* AssimilationInfo.m */,
 			);
 			path = 3;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 			files = (
 				E38F8D9A224A3CDE009EF306 /* ViewController.m in Sources */,
 				3221FBE2225025B200BE8F7A /* TranslatorRoman.m in Sources */,
+				3209900322510F44001AE6B2 /* AssimilationInfo.m in Sources */,
 				E38F8DD2224A8AEA009EF306 /* DoomsdayMachine.m in Sources */,
 				32D0DE2622504384006E2A1B /* TranslatorRoman+ParseOverThousand.m in Sources */,
 				E38F8DDA224BA508009EF306 /* MatrixHacker.m in Sources */,
