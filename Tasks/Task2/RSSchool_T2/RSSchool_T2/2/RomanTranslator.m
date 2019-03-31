@@ -20,17 +20,17 @@
 }
 
 - (NSString *)arabicFromRoman:(NSString *)romanString {
-//    [romanString retain];
-//
-//    TranslatorArabic *translator = [TranslatorArabic new];
-//
-//    NSString *result = [translator translateToArabic:romanString];
-//    [result retain];
-//
-//    [translator release];
-//    [romanString release];
-//
-//    return [result autorelease];
+    [romanString retain];
+
+    TranslatorArabic *translator = [TranslatorArabic new];
+
+    NSString *result = [translator translateToArabic:romanString];
+    [result retain];
+
+    [translator release];
+    [romanString release];
+
+    return [result autorelease];
     return @"";
 }
 
