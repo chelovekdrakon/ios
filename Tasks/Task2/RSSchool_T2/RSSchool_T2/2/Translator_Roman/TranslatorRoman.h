@@ -11,8 +11,7 @@
 @interface TranslatorRoman : NSObject
 
 @property(readonly) NSDictionary *mapArabicToRoman;
-
-- (NSString *)translateToArabic:(NSString *)romanString;
+- (NSString *)translateToRoman:(NSString *)arabicString;
 
 @end
 

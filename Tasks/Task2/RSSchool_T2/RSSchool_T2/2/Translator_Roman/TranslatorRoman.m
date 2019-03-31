@@ -49,23 +49,23 @@
     [super dealloc];
 }
 
-- (NSString *)translateToArabic:(NSString *)romanString {
-    [romanString retain];
+- (NSString *)translateToRoman:(NSString *)arabicString {
+    [arabicString retain];
     
-    int decimalPart = [romanString intValue] % 10;
+    int decimalPart = [arabicString intValue] % 10;
     NSMutableString *simple = [self parseDigit:(decimalPart > 0 ? decimalPart : 10) withMultiplier:1];
     [simple retain];
     
     
-    int hundredPart = [romanString intValue] % 100;
+    int hundredPart = [arabicString intValue] % 100;
     NSMutableString *decimal = [self parseDigit:(hundredPart > 0 ? hundredPart : 100) withMultiplier:10];
     [decimal retain];
     
-    int thousandPart = [romanString intValue] % 1000;
+    int thousandPart = [arabicString intValue] % 1000;
     NSMutableString *hundrends = [self parseDigit:(thousandPart > 0 ? thousandPart : 10000) withMultiplier:100];
     [hundrends retain];
     
-    NSMutableString *thousands = [self parseOverThousand:[romanString doubleValue]];
+    NSMutableString *thousands = [self parseOverThousand:[arabicString doubleValue]];
     [thousands retain];
     
     NSString * result = [NSString stringWithFormat:@"%@%@%@%@",
@@ -77,7 +77,7 @@
     [thousands release];
     
     
-    [romanString release];
+    [arabicString release];
     
     return result; // will be autoreleased
 }

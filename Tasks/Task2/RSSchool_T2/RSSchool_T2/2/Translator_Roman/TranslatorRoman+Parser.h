@@ -9,5 +9,7 @@
 #import "TranslatorRoman.h"
 
 @interface TranslatorRoman (Parser)
+
 - (NSMutableString *)parseDigit:(double)number withMultiplier:(int)multiplier;
+
 @end
