@@ -10,6 +10,7 @@
 #import "TranslatorRoman+ParseTen.h"
 #import "TranslatorRoman+ParseHundred.h"
 #import "TranslatorRoman+ParseThousand.h"
+#import "TranslatorRoman+ParseOverThousand.h"
 
 
 @implementation TranslatorRoman
@@ -62,7 +63,9 @@
     int thousandPart = [romanString intValue] % 1000;
     NSMutableString *hundrends = [self parseThousand:thousandPart > 0 ? thousandPart : 10000];
     
-    NSString * result = [NSString stringWithFormat:@"%@%@%@", hundrends, decimal, simple];
+    NSMutableString *thousands = [self parseThousand:[romanString doubleValue]];
+    
+    NSString * result = [NSString stringWithFormat:@"%@%@%@%@", thousands, hundrends, decimal, simple];
     
     [romanString release];
     
