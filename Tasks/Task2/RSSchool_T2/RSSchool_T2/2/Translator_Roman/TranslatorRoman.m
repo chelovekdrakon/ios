@@ -45,7 +45,7 @@
 }
 
 - (void)dealloc {
-    // IS IT SECURE TO USE [...autorelease] VALUE AS PROPERTY?
+    // HOW SAFE IS IT TO USE [...autorelease] VALUE AS PROPERTY?
     [super dealloc];
 }
 
@@ -79,7 +79,7 @@
     
     [arabicString release];
     
-    return result; // will be autoreleased
+    return result;
 }
 
 @end
