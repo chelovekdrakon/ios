@@ -2,14 +2,9 @@
 
 // capable of adding and substracting dates.
 
-// 3 text fields : "Start date", "Step" and "Date unit" placeholders
-// 2 buttons: "Add" and "Sub".
-// 1 label: current date (date format: 20/04/2004 04:20)
-
-// "Step" should allow only numbers, it is the step by which the date value should be increased or decreased.
 // "Date unit" should only allow these values: year, month, week, day, hour, minute. If is the "what" should be added/subtracted to/from the date by "Step" values.
 
-@interface DateMachine()
+@interface DateMachine() <UITextFieldDelegate>
 
 @property(retain, nonatomic)NSDateFormatter *dateFormatter;
 
@@ -36,6 +31,63 @@
     _dateFormatter = formatter;
     
     [self createUI];
+    
+    _stepTextField.delegate = self;
+    _dateUnitTextField.delegate = self;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
+    if (textField == _stepTextField) {
+        return [self validateStepTextField:string];
+    } else if (textField == _dateUnitTextField) {
+        return [self validateDateUnitTextField:string];
+    } else {
+        return YES;
+    }
+}
+
+- (BOOL)validateDateUnitTextField:(NSString *)string {
+    if (string.length == 0) {
+        return YES;
+    }
+    
+    BOOL result = NO;
+    
+    NSArray *arr = @[@"year", @"month", @"week", @"day", @"hour", @"minute"];
+    NSString *text = [NSString stringWithFormat:@"%@%@", _dateUnitTextField.text, string];
+    
+    for (NSString *str in arr) {
+        if (text.length <= str.length) {
+            NSString *sub = [str substringToIndex:text.length];
+            
+            NSComparisonResult compareResult = [sub caseInsensitiveCompare:text];
+            
+            if (compareResult == NSOrderedSame) {
+                result = YES;
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (BOOL)validateStepTextField:(NSString *)string {
+    if (string.length == 0) {
+        return YES;
+    }
+    
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\d" options:0 error:&error];
+    
+    NSTextCheckingResult *match = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
+    
+    if (match) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (NSDateFormatter*)createDateFormatter {
@@ -84,6 +136,8 @@
     
     
     [_subButton addTarget:self action:@selector(onSubClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [generator release];
 }
 
 - (void)onAddClick:(id)sender {
