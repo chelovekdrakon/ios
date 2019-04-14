@@ -31,6 +31,19 @@
     
     _stepTextField.delegate = self;
     _dateUnitTextField.delegate = self;
+    
+    [_startDateTextField addTarget:self action:@selector(handleEditingDidEndStartDate) forControlEvents:UIControlEventAllEditingEvents];
+}
+
+-(void)handleEditingDidEndStartDate {
+    NSString *text = _startDateTextField.text;
+    
+    NSDateFormatter *formatter = [self createDateFormatter];
+    NSDate* date = [formatter dateFromString:text];
+    
+    if (text.length > 0 && date) {
+        _dateLabel.text = _startDateTextField.text;
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -157,10 +170,6 @@
     
     NSString *currDateString = _dateLabel.text;
     
-    if (_startDateTextField.text.length) {
-        currDateString = _startDateTextField.text;
-    }
-    
     NSDate *currDate = [formatter dateFromString:currDateString];
     
     NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
@@ -175,6 +184,8 @@
         dateComponent.hour = step;
     } else if ([dateUnit isEqualToString:@"minute"]) {
         dateComponent.minute = step;
+    } else if ([dateUnit isEqualToString:@"week"]) {
+        dateComponent.weekOfMonth = step;
     }
     
     NSDate *nextDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponent toDate:currDate options:0];
