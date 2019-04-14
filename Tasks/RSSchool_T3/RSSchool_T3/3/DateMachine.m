@@ -47,79 +47,51 @@
 }
 
 - (void)createUI {
-    UIView *subview = [self generateSubview];
+    UIGenerator *generator = [[UIGenerator alloc] init];
+    
+    UIView *subview = [generator generateSubview];
     [self.view addSubview:subview];
     _subview = subview;
     
-    UILabel *label = [self generateLabel];
+    UILabel *label = [generator generateLabelWithFormatter:_dateFormatter];
     [_subview addSubview:label];
     _dateLabel = label;
     
     
-    UITextField *startDateTextField = [self generateTextFieldOn:@(120) withPlaceholder:@"Start date"];
+    UITextField *startDateTextField = [generator generateTextFieldOn:@(120) withPlaceholder:@"Start date"];
     [_subview addSubview:startDateTextField];
     _startDateTextField = startDateTextField;
     
-    UITextField *stepTextField = [self generateTextFieldOn:@(190) withPlaceholder:@"Step"];
+    UITextField *stepTextField = [generator generateTextFieldOn:@(190) withPlaceholder:@"Step"];
     [_subview addSubview:stepTextField];
     _stepTextField = stepTextField;
     
-    UITextField *dateUnitTextField = [self generateTextFieldOn:@(260) withPlaceholder:@"Date unit"];
+    UITextField *dateUnitTextField = [generator generateTextFieldOn:@(260) withPlaceholder:@"Date unit"];
     [_subview addSubview:dateUnitTextField];
     _dateUnitTextField = dateUnitTextField;
     
     
-    UIButton *addButton = [self generateButtonOn:@[@(10), @(345)] withTitle:@"Add"];
+    UIButton *addButton = [generator generateButtonOn:@[@(10), @(345)] withTitle:@"Add"];
     [_subview addSubview:addButton];
     _addButton = addButton;
     
+    [_addButton addTarget:self action:@selector(onAddClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *subButton = [self generateButtonOn:@[@(180), @(345)] withTitle:@"Sub"];
+    
+    UIButton *subButton = [generator generateButtonOn:@[@(180), @(345)] withTitle:@"Sub"];
     [_subview addSubview:subButton];
-    _addButton = subButton;
+    _subButton = subButton;
+    
+    
+    [_subButton addTarget:self action:@selector(onSubClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (UIButton *)generateButtonOn:(NSArray *)positions withTitle:(NSString *)title {
-    NSNumber *x = positions[0];
-    NSNumber *y = positions[1];
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(x.doubleValue, y.doubleValue, 130, 50)];
-    
-    button.backgroundColor = [UIColor yellowColor];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    return [button autorelease];
+- (void)onAddClick:(id)sender {
+    NSLog(@"onAddClick, sender: %@", sender);
 }
 
-
-- (UIView *)generateSubview {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(25, 60, 325, 410)];
-    view.backgroundColor = [UIColor blackColor];
-    
-    return [view autorelease];
-}
-
-- (UILabel *)generateLabel {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 70)];
-    
-    NSString* text = [[NSString alloc] initWithString:[_dateFormatter stringFromDate:[NSDate date]]];
-    
-    label.backgroundColor = [UIColor redColor];
-    label.text = text;
-    label.textAlignment = NSTextAlignmentCenter;
-
-    return [label autorelease];
-}
-
-- (UITextField *)generateTextFieldOn:(NSNumber *)position withPlaceholder:(NSString *)placeholder {
-    UITextField *textField = [[UITextField alloc]
-                              initWithFrame:CGRectMake(20, position.doubleValue, 280, 50)];
-    
-    textField.backgroundColor = [UIColor whiteColor];
-    textField.placeholder = placeholder;
-    
-    return [textField autorelease];
+- (void)onSubClick:(id)sender {
+    NSLog(@"onSubClick, sender: %@", sender);
 }
 
 @end

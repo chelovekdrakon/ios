@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		322AC70F226395BF00968D67 /* UIGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 322AC70E226395BF00968D67 /* UIGenerator.m */; };
 		E3821557225B533B00E3B12B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3821556225B533B00E3B12B /* AppDelegate.m */; };
 		E382155F225B533E00E3B12B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E382155E225B533E00E3B12B /* Assets.xcassets */; };
 		E3821562225B533E00E3B12B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3821560225B533E00E3B12B /* LaunchScreen.storyboard */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		322AC70D226395BF00968D67 /* UIGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIGenerator.h; sourceTree = "<group>"; };
+		322AC70E226395BF00968D67 /* UIGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIGenerator.m; sourceTree = "<group>"; };
 		E3821552225B533B00E3B12B /* RSSchool_T3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSchool_T3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3821555225B533B00E3B12B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E3821556225B533B00E3B12B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 			children = (
 				E39C2575225CAA7E00C3BCC1 /* DateMachine.h */,
 				E39C2576225CAA7E00C3BCC1 /* DateMachine.m */,
+				322AC70D226395BF00968D67 /* UIGenerator.h */,
+				322AC70E226395BF00968D67 /* UIGenerator.m */,
 			);
 			path = 3;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				E39C2577225CAA7E00C3BCC1 /* DateMachine.m in Sources */,
 				E3821557225B533B00E3B12B /* AppDelegate.m in Sources */,
 				E39C2564225B683500C3BCC1 /* FullBinaryTrees.m in Sources */,
+				322AC70F226395BF00968D67 /* UIGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

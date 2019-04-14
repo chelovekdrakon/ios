@@ -1,4 +1,3 @@
-#import <UIKit/UIKit.h>
 /*
  You need to complete a View Controller capable of adding and substracting dates.
  It should have 3 text fields, 2 buttons and 1 label.
@@ -34,5 +33,9 @@
  09/04/2019 04:00
  09/04/2019 00:00
 */
+
+#import <UIKit/UIKit.h>
+#import "UIGenerator.h"
+
 @interface DateMachine : UIViewController
 @end
