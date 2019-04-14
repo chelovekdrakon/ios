@@ -15,6 +15,7 @@
 
  For all the others, it should print `unsupported`
  */
+
 @interface NSArray (RSSchool_Extension_Name)
 - (NSString *)print;
 @end
