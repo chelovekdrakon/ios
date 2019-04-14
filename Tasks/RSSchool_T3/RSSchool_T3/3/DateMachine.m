@@ -1,8 +1,5 @@
 #import "DateMachine.h"
 
-// capable of adding and substracting dates.
-
-// "Date unit" should only allow these values: year, month, week, day, hour, minute. If is the "what" should be added/subtracted to/from the date by "Step" values.
 
 @interface DateMachine() <UITextFieldDelegate>
 
@@ -92,9 +89,11 @@
 
 - (NSDateFormatter*)createDateFormatter {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     [formatter setDateFormat:@"dd/MM/yyyy HH:mm"];
     [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT+3"]];
     [formatter setLocale:[NSLocale autoupdatingCurrentLocale]];
+    
     return [formatter autorelease];
 }
 
@@ -141,11 +140,52 @@
 }
 
 - (void)onAddClick:(id)sender {
-    NSLog(@"onAddClick, sender: %@", sender);
+    NSString *dateUnit = _dateUnitTextField.text.lowercaseString;
+    NSInteger step = [_stepTextField.text integerValue];
+    
+    if (step && dateUnit.length) {
+        NSString *text = [self getNextDateWith:dateUnit and:1];
+        _dateLabel.text = text;
+    }
+}
+
+- (NSString *)getNextDateWith:(NSString *)dateUnit and:(NSInteger )multiplier {
+    NSDateFormatter *formatter = [self createDateFormatter];
+    // I could not use _dateFormatter here : why ? (Crash : BAD_ACCESS)
+    
+    NSInteger step = [_stepTextField.text integerValue] * multiplier;
+    
+    NSDate *currDate = [formatter dateFromString:_dateLabel.text];
+    
+    NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
+    
+    if ([dateUnit isEqualToString:@"year"]) {
+        dateComponent.year = step;
+    } else if ([dateUnit isEqualToString:@"month"]) {
+        dateComponent.month = step;
+    } else if ([dateUnit isEqualToString:@"day"]) {
+        dateComponent.day = step;
+    } else if ([dateUnit isEqualToString:@"hour"]) {
+        dateComponent.hour = step;
+    } else if ([dateUnit isEqualToString:@"minute"]) {
+        dateComponent.minute = step;
+    }
+    
+    NSDate *nextDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponent toDate:currDate options:0];
+    
+    NSString* text = [[NSString alloc] initWithString:[formatter stringFromDate:nextDate]];
+    
+    return [text autorelease];
 }
 
 - (void)onSubClick:(id)sender {
-    NSLog(@"onSubClick, sender: %@", sender);
+    NSString *dateUnit = _dateUnitTextField.text.lowercaseString;
+    NSInteger step = [_stepTextField.text integerValue];
+    
+    if (step && dateUnit.length) {
+        NSString *text = [self getNextDateWith:dateUnit and:-1];
+        _dateLabel.text = text;
+    }
 }
 
 @end
