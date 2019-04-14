@@ -155,7 +155,13 @@
     
     NSInteger step = [_stepTextField.text integerValue] * multiplier;
     
-    NSDate *currDate = [formatter dateFromString:_dateLabel.text];
+    NSString *currDateString = _dateLabel.text;
+    
+    if (_startDateTextField.text.length) {
+        currDateString = _startDateTextField.text;
+    }
+    
+    NSDate *currDate = [formatter dateFromString:currDateString];
     
     NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
     
