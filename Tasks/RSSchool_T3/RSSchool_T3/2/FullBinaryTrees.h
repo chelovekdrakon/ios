@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "TreeNode.h"
 /**
  A full binary tree is a binary tree where each node has exactly 0 or 2 children.
 

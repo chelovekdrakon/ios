@@ -37,6 +37,12 @@
   XCTAssertTrue([output containsString:@"[0,0,0,0,0,0,0]"]);
   XCTAssertTrue([output containsString:@"[0,0,0,0,0,null,null,null,null,0,0]"]);
   XCTAssertTrue([output containsString:@"[0,0,0,0,0,null,null,0,0]"]);
+    
+//    "[null,0,null,0,null,0,null,0,null,0,null,0,null,0,null]",
+//    "[null,0,null,0,null,0,null,0,null,0,null,0,null,0,null]",
+//    "[null,0,null,0,null,0,null,0,null,0,null,0,null,0,null]",
+//    "[null,0,null,0,null,0,null,0,null,0,null,0,null,0,null]",
+//    "[null,0,null,0,null,0,null,0,null,0,null,0,null,0,null]"
 }
 
 - (void)test5 {
