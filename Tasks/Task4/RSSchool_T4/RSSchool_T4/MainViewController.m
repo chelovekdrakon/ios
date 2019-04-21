@@ -10,9 +10,10 @@
 
 @interface MainViewController ()
 @property(retain, nonatomic) UIView* mainView;
-@property(retain, nonatomic) UIView* flagView;
+@property(retain, nonatomic) UIImageView* flagImageView;
 @property(retain, nonatomic) UITextField* textField;
-@property(retain, nonatomic) NSDictionary* countryCodes;
+@property(retain, nonatomic) NSArray* countryCodes;
+@property(retain, nonatomic) NSArray* countries;
 @property(retain, nonatomic) NSCharacterSet* phoneCharacterSet;
 @end
 
@@ -21,19 +22,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.countryCodes = @{
-              @"77"  : @"KZ", // should be before @"7" to avoid double match
-              @"7"   : @"RU",
-              @"373" : @"MD",
-              @"374" : @"AM",
-              @"375" : @"BY",
-              @"380" : @"UA",
-              @"992" : @"TJ",
-              @"993" : @"TM",
-              @"994" : @"AZ",
-              @"996" : @"KG",
-              @"998" : @"UZ"
-        };
+        // @"77" should be before @"7" to avoid double match
+        self.countryCodes = @[@"77", @"7", @"373", @"374", @"375", @"380", @"992", @"993", @"994", @"996", @"998"];
+        self.countries    = @[@"KZ", @"RU",@"MD",  @"AM",  @"BY",  @"UA",  @"TJ",  @"TM",  @"AZ",  @"KG",  @"UZ"];
         
         self.phoneCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789 +-#*()"];
     }
@@ -43,9 +34,10 @@
 
 - (void)dealloc {
     [_countryCodes release];
+    [_countries release];
     [_textField release];
     [_mainView release];
-    [_flagView release];
+    [_flagImageView release];
     [_phoneCharacterSet release];
     
     [super dealloc];
@@ -69,24 +61,24 @@
 
     [self.view addSubview:_mainView];
     
-    CGFloat flagViewWidth = 50;
-    CGFloat flagViewHeight = mainViewHeight - 50;
-    CGFloat flagViewMargin = 10;
+    CGFloat flagImageViewWidth = 50;
+    CGFloat flagImageViewHeight = mainViewHeight - 50;
+    CGFloat flagImageViewMargin = 10;
     
-    UIImageView* flagView = [[UIImageView alloc] initWithFrame:CGRectMake(flagViewMargin, 25, flagViewWidth, flagViewHeight)];
-    self.flagView = flagView;
-    [flagView release];
+    UIImageView* flagImageView = [[UIImageView alloc] initWithFrame:CGRectMake(flagImageViewMargin, 25, flagImageViewWidth, flagImageViewHeight)];
+    self.flagImageView = flagImageView;
+    [flagImageView release];
     
-    _flagView.layer.borderWidth = 1.f;
-    _flagView.layer.borderColor = [UIColor blackColor].CGColor;
-    _flagView.layer.cornerRadius = 2;
+    _flagImageView.layer.borderWidth = 1.f;
+    _flagImageView.layer.borderColor = [UIColor blackColor].CGColor;
+    _flagImageView.layer.cornerRadius = 2;
     
-    [_mainView addSubview:_flagView];
+    [_mainView addSubview:_flagImageView];
     
     
-    CGFloat textFieldpositionX = (_flagView.center.x + (_flagView.layer.frame.size.width / 2)) + flagViewMargin;
+    CGFloat textFieldpositionX = (_flagImageView.center.x + (_flagImageView.layer.frame.size.width / 2)) + flagImageViewMargin;
     CGFloat textFieldMarginRight = 10;
-    CGFloat textFieldWidht = mainViewWidth - flagViewWidth - (flagViewMargin * 2) - textFieldMarginRight;
+    CGFloat textFieldWidht = mainViewWidth - flagImageViewWidth - (flagImageViewMargin * 2) - textFieldMarginRight;
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(textFieldpositionX, 25, textFieldWidht, mainViewHeight - 50)];
     self.textField = textField;
@@ -106,28 +98,32 @@
         return NO;
     }
     
-    NSString *textInputValue = [NSString stringWithFormat:@"%@%@", textField.text, string];
+    NSString *textInputValue = string.length
+        ? [NSString stringWithFormat:@"%@%@", textField.text, string]
+        : [textField.text substringToIndex:(textField.text.length - range.length)];
+    
     NSString *textInputPhoneNumber = [self getPhoneNumberWithoutFormatting:textInputValue];
-//    [textInputPhoneNumber retain];
+    [textInputPhoneNumber retain];
     
     NSMutableString *country = [[NSMutableString alloc] init];
-
-    for (NSString* key in _countryCodes) {
-        if ([textInputPhoneNumber hasPrefix:key]) {
-            [country appendString:_countryCodes[key]];
+    
+    for (int i = 0; i < _countryCodes.count; i++) {
+        if ([textInputPhoneNumber hasPrefix:_countryCodes[i]]) {
+            [country appendString:_countries[i]];
             break;
         }
     }
     
     if (country.length) {
-        [self drawFlag:country];
+        _flagImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"flag_%@", country]];
+    } else {
+        _flagImageView.image = nil;
     }
     
-    return YES;
-}
-
-- (void)drawFlag:(NSString *)country {
+    [textInputPhoneNumber release];
+    [country release];
     
+    return YES;
 }
 
 - (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
