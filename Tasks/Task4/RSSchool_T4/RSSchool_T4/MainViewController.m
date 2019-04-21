@@ -15,6 +15,7 @@
 @property(retain, nonatomic) NSArray* countryCodes;
 @property(retain, nonatomic) NSArray* countries;
 @property(retain, nonatomic) NSCharacterSet* phoneCharacterSet;
+@property(retain, nonatomic) NSDictionary* phoneNumbersLength;
 @end
 
 @implementation MainViewController
@@ -25,6 +26,19 @@
         // @"77" should be before @"7" to avoid double match
         self.countryCodes = @[@"77", @"7", @"373", @"374", @"375", @"380", @"992", @"993", @"994", @"996", @"998"];
         self.countries    = @[@"KZ", @"RU",@"MD",  @"AM",  @"BY",  @"UA",  @"TJ",  @"TM",  @"AZ",  @"KG",  @"UZ"];
+        self.phoneNumbersLength = @{
+            @"KZ": @(10),
+            @"RU": @(10),
+            @"MD": @(8),
+            @"AM": @(8),
+            @"BY": @(9),
+            @"UA": @(9),
+            @"TJ": @(9),
+            @"TM": @(8),
+            @"AZ": @(9),
+            @"KG": @(9),
+            @"UZ": @(9)
+        };
         
         self.phoneCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789 +-#*()"];
     }
@@ -39,6 +53,7 @@
     [_mainView release];
     [_flagImageView release];
     [_phoneCharacterSet release];
+    [_phoneNumbersLength release];
     
     [super dealloc];
 }
@@ -121,7 +136,11 @@
             _flagImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"flag_%@", country]];
         }
         
-        [self formatTextField:textFieldPhoneNumber];
+        BOOL isLengthValid = [self validatePhoneLength:textFieldPhoneNumber fromCountry:country];
+        
+        if (isLengthValid) {
+            [self formatTextField:textFieldPhoneNumber fromCountry:country];
+        }
     } else {
         _flagImageView.image = nil;
         
@@ -136,7 +155,14 @@
     return result;
 }
 
-- (void)formatTextField:(NSString *)phoneNumber {
+- (BOOL)validatePhoneLength:(NSString *)phoneNumber fromCountry:(NSString *)country {
+    
+    NSNumber *expectedLength = _phoneNumbersLength[country];
+    
+    return phoneNumber.length <= expectedLength.doubleValue;
+}
+
+- (void)formatTextField:(NSString *)phoneNumber fromCountry:(NSString *)country {
     _textField.text = phoneNumber;
 }
 
