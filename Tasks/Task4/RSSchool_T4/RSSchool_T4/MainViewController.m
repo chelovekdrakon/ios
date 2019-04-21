@@ -10,7 +10,7 @@
 
 @interface MainViewController ()
 @property(retain, nonatomic) UIView* mainView;
-@property(retain, nonatomic) UIView* flagImage;
+@property(retain, nonatomic) UIView* flagView;
 @property(retain, nonatomic) UITextField* textField;
 @property(retain, nonatomic) NSDictionary* countryCodes;
 @property(retain, nonatomic) NSCharacterSet* phoneCharacterSet;
@@ -45,7 +45,7 @@
     [_countryCodes release];
     [_textField release];
     [_mainView release];
-    [_flagImage release];
+    [_flagView release];
     [_phoneCharacterSet release];
     
     [super dealloc];
@@ -69,24 +69,24 @@
 
     [self.view addSubview:_mainView];
     
-    CGFloat flagImageWidth = 50;
-    CGFloat flagImageHeight = mainViewHeight - 50;
-    CGFloat flagImageMargin = 10;
+    CGFloat flagViewWidth = 50;
+    CGFloat flagViewHeight = mainViewHeight - 50;
+    CGFloat flagViewMargin = 10;
     
-    UIImageView* flagImage = [[UIImageView alloc] initWithFrame:CGRectMake(flagImageMargin, 25, flagImageWidth, flagImageHeight)];
-    self.flagImage = flagImage;
-    [flagImage release];
+    UIImageView* flagView = [[UIImageView alloc] initWithFrame:CGRectMake(flagViewMargin, 25, flagViewWidth, flagViewHeight)];
+    self.flagView = flagView;
+    [flagView release];
     
-    _flagImage.layer.borderWidth = 1.f;
-    _flagImage.layer.borderColor = [UIColor blackColor].CGColor;
-    _flagImage.layer.cornerRadius = 2;
+    _flagView.layer.borderWidth = 1.f;
+    _flagView.layer.borderColor = [UIColor blackColor].CGColor;
+    _flagView.layer.cornerRadius = 2;
     
-    [_mainView addSubview:_flagImage];
+    [_mainView addSubview:_flagView];
     
     
-    CGFloat textFieldpositionX = (_flagImage.center.x + (_flagImage.layer.frame.size.width / 2)) + flagImageMargin;
+    CGFloat textFieldpositionX = (_flagView.center.x + (_flagView.layer.frame.size.width / 2)) + flagViewMargin;
     CGFloat textFieldMarginRight = 10;
-    CGFloat textFieldWidht = mainViewWidth - flagImageWidth - (flagImageMargin * 2) - textFieldMarginRight;
+    CGFloat textFieldWidht = mainViewWidth - flagViewWidth - (flagViewMargin * 2) - textFieldMarginRight;
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(textFieldpositionX, 25, textFieldWidht, mainViewHeight - 50)];
     self.textField = textField;
@@ -127,7 +127,7 @@
 }
 
 - (void)drawFlag:(NSString *)country {
-//    UIImage *image = [UIImage alloc] init
+    
 }
 
 - (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
