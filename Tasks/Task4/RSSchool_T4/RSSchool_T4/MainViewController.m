@@ -12,9 +12,44 @@
 @property(retain, nonatomic) UIView* mainView;
 @property(retain, nonatomic) UIView* flagView;
 @property(retain, nonatomic) UITextField* textField;
+@property(retain, nonatomic) NSDictionary* countryCodes;
+@property(retain, nonatomic) NSCharacterSet* phoneCharacterSet;
 @end
 
 @implementation MainViewController
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.countryCodes = @{
+              @"77"  : @"KZ", // should be before @"7" to avoid double match
+              @"7"   : @"RU",
+              @"373" : @"MD",
+              @"374" : @"AM",
+              @"375" : @"BY",
+              @"380" : @"UA",
+              @"992" : @"TJ",
+              @"993" : @"TM",
+              @"994" : @"AZ",
+              @"996" : @"KG",
+              @"998" : @"UZ"
+        };
+        
+        self.phoneCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789 +-#*()"];
+    }
+    
+    return self;
+}
+
+- (void)dealloc {
+    [_countryCodes release];
+    [_textField release];
+    [_mainView release];
+    [_flagView release];
+    [_phoneCharacterSet release];
+    
+    [super dealloc];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,10 +96,58 @@
     _textField.textContentType = UITextContentTypeTelephoneNumber;
     [self setTextFieldBorder:_textField];
     
+    _textField.delegate = (id)self;
+    
     [_mainView addSubview:_textField];
 }
 
--(void)setTextFieldBorder:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if(![_phoneCharacterSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:string]]) {
+        return NO;
+    }
+    
+    NSString *textInputValue = [NSString stringWithFormat:@"%@%@", textField.text, string];
+    NSString *textInputPhoneNumber = [self getPhoneNumberWithoutFormatting:textInputValue];
+//    [textInputPhoneNumber retain];
+    
+    NSMutableString *country = [[NSMutableString alloc] init];
+
+    for (NSString* key in _countryCodes) {
+        if ([textInputPhoneNumber hasPrefix:key]) {
+            [country appendString:_countryCodes[key]];
+            break;
+        }
+    }
+    
+    if (country.length) {
+        
+    }
+    
+    return YES;
+}
+
+- (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
+    NSError *error = NULL;
+    
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"\\d" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSArray *matches = [regex matchesInString:str
+                                      options:0
+                                        range:NSMakeRange(0, [str length])];
+    
+    NSMutableString *result = [[NSMutableString alloc] init];
+    
+    for (NSTextCheckingResult *match in matches) {
+        NSRange matchRange = [match range];
+        NSString *subStr = [str substringWithRange:matchRange];
+        [result appendString:subStr];
+    }
+    
+    [regex release];
+    
+    return [result autorelease];
+}
+
+- (void)setTextFieldBorder:(UITextField *)textField {
     CALayer *border = [CALayer layer];
     
     CGFloat borderWidth = 2;
