@@ -98,32 +98,46 @@
         return NO;
     }
     
-    NSString *textInputValue = string.length
+    BOOL result = NO;
+    
+    NSString *textFieldValue = string.length
         ? [NSString stringWithFormat:@"%@%@", textField.text, string]
         : [textField.text substringToIndex:(textField.text.length - range.length)];
     
-    NSString *textInputPhoneNumber = [self getPhoneNumberWithoutFormatting:textInputValue];
-    [textInputPhoneNumber retain];
+    NSString *textFieldPhoneNumber = [self getPhoneNumberWithoutFormatting:textFieldValue];
+    [textFieldPhoneNumber retain];
     
     NSMutableString *country = [[NSMutableString alloc] init];
     
     for (int i = 0; i < _countryCodes.count; i++) {
-        if ([textInputPhoneNumber hasPrefix:_countryCodes[i]]) {
+        if ([textFieldPhoneNumber hasPrefix:_countryCodes[i]]) {
             [country appendString:_countries[i]];
             break;
         }
     }
     
     if (country.length) {
-        _flagImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"flag_%@", country]];
+        if (country.length < 4) {
+            _flagImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"flag_%@", country]];
+        }
+        
+        [self formatTextField:textFieldPhoneNumber];
     } else {
         _flagImageView.image = nil;
+        
+        if (textFieldPhoneNumber.length <= 12) {
+            result = YES;
+        }
     }
     
-    [textInputPhoneNumber release];
+    [textFieldPhoneNumber release];
     [country release];
     
-    return YES;
+    return result;
+}
+
+- (void)formatTextField:(NSString *)phoneNumber {
+    _textField.text = phoneNumber;
 }
 
 - (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
