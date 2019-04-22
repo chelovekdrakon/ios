@@ -162,15 +162,12 @@
 
 - (BOOL)validatePhoneLength:(NSString *)phoneNumber fromCountry:(NSString *)country withCountryCode:(NSString *)countryCode {
     NSNumber *expectedLength = _phoneNumbersLength[country];
-    
     return phoneNumber.length <= (expectedLength.doubleValue + countryCode.length);
 }
 
 - (void)formatTextField:(NSString *)phoneNumber fromCountry:(NSString *)country withCountryCode:(NSString *)countryCode {
     NSMutableString *result = [[NSMutableString alloc] init];
-    
     NSInteger expectedLength = [(NSNumber *)_phoneNumbersLength[country] integerValue];
-    
     
     if (expectedLength == 10) {
         // +code (xxx) xxx xx xx
