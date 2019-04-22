@@ -123,10 +123,13 @@
     [textFieldPhoneNumber retain];
     
     NSMutableString *country = [[NSMutableString alloc] init];
+    NSMutableString *countryCode = [[NSMutableString alloc] init];
     
     for (int i = 0; i < _countryCodes.count; i++) {
-        if ([textFieldPhoneNumber hasPrefix:_countryCodes[i]]) {
+        NSString *code = _countryCodes[i];
+        if ([textFieldPhoneNumber hasPrefix:code]) {
             [country appendString:_countries[i]];
+            [countryCode appendString:code];
             break;
         }
     }
@@ -136,10 +139,10 @@
             _flagImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"flag_%@", country]];
         }
         
-        BOOL isLengthValid = [self validatePhoneLength:textFieldPhoneNumber fromCountry:country];
+        BOOL isLengthValid = [self validatePhoneLength:textFieldPhoneNumber fromCountry:country withCountryCode:countryCode];
         
         if (isLengthValid) {
-            [self formatTextField:textFieldPhoneNumber fromCountry:country];
+            [self formatTextField:textFieldPhoneNumber fromCountry:country withCountryCode:countryCode];
         }
     } else {
         _flagImageView.image = nil;
@@ -151,19 +154,78 @@
     
     [textFieldPhoneNumber release];
     [country release];
+    [countryCode release];
     
     return result;
 }
 
-- (BOOL)validatePhoneLength:(NSString *)phoneNumber fromCountry:(NSString *)country {
-    
+- (BOOL)validatePhoneLength:(NSString *)phoneNumber fromCountry:(NSString *)country withCountryCode:(NSString *)countryCode {
     NSNumber *expectedLength = _phoneNumbersLength[country];
     
-    return phoneNumber.length <= expectedLength.doubleValue;
+    return phoneNumber.length <= (expectedLength.doubleValue + countryCode.length);
 }
 
-- (void)formatTextField:(NSString *)phoneNumber fromCountry:(NSString *)country {
-    _textField.text = phoneNumber;
+- (void)formatTextField:(NSString *)phoneNumber fromCountry:(NSString *)country withCountryCode:(NSString *)countryCode {
+    NSMutableString *result = [[NSMutableString alloc] init];
+    
+    NSInteger expectedLength = [(NSNumber *)_phoneNumbersLength[country] integerValue];
+    
+    
+    if (expectedLength == 10) {
+        // +code (xxx) xxx xx xx
+        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:3 and:3 and:2 and:@" "]];
+    } else if (expectedLength == 9) {
+        // +code (xx) xxx-xx-xx
+        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:2 and:@"-"]];
+    } else if (expectedLength == 8) {
+        //  +code (xx) xxx-xxx
+        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:3 and:@"-"]];
+    }
+    
+    _textField.text = result;
+    [result release];
+}
+
+- (NSString *)formatPhoneNumber:(NSString *)phoneNumber
+                         withCountryCode:(NSString *)countryCode
+                                   where:(int)subCodeLength
+                                     and:(int)firstBlockLength
+                                     and:(int)secondBlockLength
+                                     and:(NSString *)divider {
+    NSMutableString *result = [[NSMutableString alloc] init];
+    NSUInteger inputLength = phoneNumber.length;
+    NSUInteger codeLength = countryCode.length;
+    
+    if (inputLength <= codeLength) {
+        [result appendString:[NSString stringWithFormat:@"+%@", phoneNumber]];
+    } else if (inputLength <= codeLength + firstBlockLength) {
+        NSString *code = [phoneNumber substringToIndex:codeLength];
+        NSString *subCode = [phoneNumber substringFromIndex:codeLength];
+        [result appendString:[NSString stringWithFormat:@"+%@ %@", code, subCode]];
+    } else if (inputLength <= codeLength + subCodeLength + firstBlockLength) {
+        NSString *code = [phoneNumber substringToIndex:codeLength];
+        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
+        NSString *firstBlock = [phoneNumber substringFromIndex:(codeLength + subCodeLength)];
+        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@", code, subCode, firstBlock];
+        [result appendString:str];
+    } else if (inputLength <= codeLength + subCodeLength + firstBlockLength + secondBlockLength) {
+        NSString *code = [phoneNumber substringToIndex:codeLength];
+        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
+        NSString *firstBlock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength, firstBlockLength)];
+        NSString *secondBLock = [phoneNumber substringFromIndex:(codeLength + subCodeLength + firstBlockLength)];
+        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@%@%@", code, subCode, firstBlock, divider, secondBLock];
+        [result appendString:str];
+    } else {
+        NSString *code = [phoneNumber substringToIndex:codeLength];
+        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
+        NSString *firstBlock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength, firstBlockLength)];
+        NSString *secondBLock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength + firstBlockLength, secondBlockLength)];
+        NSString *thirdBlock = [phoneNumber substringFromIndex:(codeLength + subCodeLength + firstBlockLength + secondBlockLength)];
+        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@%@%@%@%@", code, subCode, firstBlock, divider, secondBLock, divider, thirdBlock];
+        [result appendString:str];
+    }
+    
+    return [result autorelease];
 }
 
 - (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
