@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		324B6925226A53D100BA502C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 324B6924226A53D100BA502C /* MainViewController.m */; };
+		325DDED0226E2CE7000958F9 /* NSPhoneFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DDECF226E2CE7000958F9 /* NSPhoneFormatter.m */; };
 		BD47B5532268ED9F0060BDF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47B5522268ED9F0060BDF3 /* AppDelegate.m */; };
 		BD47B5552268EDA10060BDF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD47B5542268EDA10060BDF3 /* Assets.xcassets */; };
 		BD47B5582268EDA10060BDF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD47B5562268EDA10060BDF3 /* LaunchScreen.storyboard */; };
@@ -18,6 +19,8 @@
 /* Begin PBXFileReference section */
 		324B6923226A53D100BA502C /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		324B6924226A53D100BA502C /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		325DDECE226E2CE7000958F9 /* NSPhoneFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSPhoneFormatter.h; sourceTree = "<group>"; };
+		325DDECF226E2CE7000958F9 /* NSPhoneFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSPhoneFormatter.m; sourceTree = "<group>"; };
 		BD47B54E2268ED9F0060BDF3 /* RSSchool_T4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSchool_T4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD47B5512268ED9F0060BDF3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BD47B5522268ED9F0060BDF3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				BD47B5522268ED9F0060BDF3 /* AppDelegate.m */,
 				324B6923226A53D100BA502C /* MainViewController.h */,
 				324B6924226A53D100BA502C /* MainViewController.m */,
+				325DDECE226E2CE7000958F9 /* NSPhoneFormatter.h */,
+				325DDECF226E2CE7000958F9 /* NSPhoneFormatter.m */,
 				BD47B5542268EDA10060BDF3 /* Assets.xcassets */,
 				BD47B5562268EDA10060BDF3 /* LaunchScreen.storyboard */,
 				BD47B5592268EDA10060BDF3 /* Info.plist */,
@@ -141,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				325DDED0226E2CE7000958F9 /* NSPhoneFormatter.m in Sources */,
 				BD47B55B2268EDA10060BDF3 /* main.m in Sources */,
 				324B6925226A53D100BA502C /* MainViewController.m in Sources */,
 				BD47B5532268ED9F0060BDF3 /* AppDelegate.m in Sources */,

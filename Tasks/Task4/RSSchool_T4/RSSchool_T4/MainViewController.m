@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "NSPhoneFormatter.h"
 
 @interface MainViewController ()
 @property(retain, nonatomic) UIView* mainView;
@@ -119,7 +120,7 @@
         ? [NSString stringWithFormat:@"%@%@", textField.text, string]
         : [textField.text substringToIndex:(textField.text.length - range.length)];
     
-    NSString *textFieldPhoneNumber = [self getPhoneNumberWithoutFormatting:textFieldValue];
+    NSString *textFieldPhoneNumber = [NSPhoneFormatter getPhoneNumberWithoutFormatting:textFieldValue];
     [textFieldPhoneNumber retain];
     
     NSMutableString *country = [[NSMutableString alloc] init];
@@ -173,80 +174,17 @@
     
     if (expectedLength == 10) {
         // +code (xxx) xxx xx xx
-        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:3 and:3 and:2 and:@" "]];
+        [result appendString:[NSPhoneFormatter formatPhoneNumber:phoneNumber withCountryCode:countryCode where:3 and:3 and:2 and:@" "]];
     } else if (expectedLength == 9) {
         // +code (xx) xxx-xx-xx
-        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:2 and:@"-"]];
+        [result appendString:[NSPhoneFormatter formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:2 and:@"-"]];
     } else if (expectedLength == 8) {
         //  +code (xx) xxx-xxx
-        [result appendString:[self formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:3 and:@"-"]];
+        [result appendString:[NSPhoneFormatter formatPhoneNumber:phoneNumber withCountryCode:countryCode where:2 and:3 and:3 and:@"-"]];
     }
     
     _textField.text = result;
     [result release];
-}
-
-- (NSString *)formatPhoneNumber:(NSString *)phoneNumber
-                         withCountryCode:(NSString *)countryCode
-                                   where:(int)subCodeLength
-                                     and:(int)firstBlockLength
-                                     and:(int)secondBlockLength
-                                     and:(NSString *)divider {
-    NSMutableString *result = [[NSMutableString alloc] init];
-    NSUInteger inputLength = phoneNumber.length;
-    NSUInteger codeLength = countryCode.length;
-    
-    if (inputLength <= codeLength) {
-        [result appendString:[NSString stringWithFormat:@"+%@", phoneNumber]];
-    } else if (inputLength <= codeLength + subCodeLength) {
-        NSString *code = [phoneNumber substringToIndex:codeLength];
-        NSString *subCode = [phoneNumber substringFromIndex:codeLength];
-        [result appendString:[NSString stringWithFormat:@"+%@ %@", code, subCode]];
-    } else if (inputLength <= codeLength + subCodeLength + firstBlockLength) {
-        NSString *code = [phoneNumber substringToIndex:codeLength];
-        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
-        NSString *firstBlock = [phoneNumber substringFromIndex:(codeLength + subCodeLength)];
-        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@", code, subCode, firstBlock];
-        [result appendString:str];
-    } else if (inputLength <= codeLength + subCodeLength + firstBlockLength + secondBlockLength) {
-        NSString *code = [phoneNumber substringToIndex:codeLength];
-        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
-        NSString *firstBlock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength, firstBlockLength)];
-        NSString *secondBLock = [phoneNumber substringFromIndex:(codeLength + subCodeLength + firstBlockLength)];
-        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@%@%@", code, subCode, firstBlock, divider, secondBLock];
-        [result appendString:str];
-    } else {
-        NSString *code = [phoneNumber substringToIndex:codeLength];
-        NSString *subCode = [phoneNumber substringWithRange:NSMakeRange(codeLength, subCodeLength)];
-        NSString *firstBlock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength, firstBlockLength)];
-        NSString *secondBLock = [phoneNumber substringWithRange:NSMakeRange(codeLength + subCodeLength + firstBlockLength, secondBlockLength)];
-        NSString *thirdBlock = [phoneNumber substringFromIndex:(codeLength + subCodeLength + firstBlockLength + secondBlockLength)];
-        NSString *str = [NSString stringWithFormat:@"+%@ (%@) %@%@%@%@%@", code, subCode, firstBlock, divider, secondBLock, divider, thirdBlock];
-        [result appendString:str];
-    }
-    
-    return [result autorelease];
-}
-
-- (NSString *)getPhoneNumberWithoutFormatting:(NSString *)str {
-    NSError *error = NULL;
-    
-    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"\\d" options:NSRegularExpressionCaseInsensitive error:&error];
-    NSArray *matches = [regex matchesInString:str
-                                      options:0
-                                        range:NSMakeRange(0, [str length])];
-    
-    NSMutableString *result = [[NSMutableString alloc] init];
-    
-    for (NSTextCheckingResult *match in matches) {
-        NSRange matchRange = [match range];
-        NSString *subStr = [str substringWithRange:matchRange];
-        [result appendString:subStr];
-    }
-    
-    [regex release];
-    
-    return [result autorelease];
 }
 
 - (void)setTextFieldBorder:(UITextField *)textField {
