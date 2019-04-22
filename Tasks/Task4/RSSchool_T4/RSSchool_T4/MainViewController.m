@@ -198,7 +198,7 @@
     
     if (inputLength <= codeLength) {
         [result appendString:[NSString stringWithFormat:@"+%@", phoneNumber]];
-    } else if (inputLength <= codeLength + firstBlockLength) {
+    } else if (inputLength <= codeLength + subCodeLength) {
         NSString *code = [phoneNumber substringToIndex:codeLength];
         NSString *subCode = [phoneNumber substringFromIndex:codeLength];
         [result appendString:[NSString stringWithFormat:@"+%@ %@", code, subCode]];
